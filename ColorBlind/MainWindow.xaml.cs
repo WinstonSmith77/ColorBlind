@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Emgu.CV;
+using Emgu.CV.CvEnum;
 
 namespace ColorBlind
 {
@@ -30,8 +32,9 @@ namespace ColorBlind
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            using (var capture = new Emgu.CV.Capture(0))
+            using (var capture = CreateCapture())
             {
+
                 using (var nextFrame = capture.QueryFrame())
                 {
                     if (nextFrame != null)
@@ -42,10 +45,45 @@ namespace ColorBlind
             }
         }
 
+        private Capture CreateCapture()
+        {
+            var result = new Emgu.CV.Capture(0);
+
+            GetProps(result);
+
+
+         
+            //result.SetCaptureProperty(CapProp.Brightness, brightness.Value);
+            //result.SetCaptureProperty(CapProp.Contrast, contrast.Value);
+            //result.SetCaptureProperty(CapProp.Staturation, sat.Value);
+            //result.SetCaptureProperty(CapProp.Gain, gain.Value);
+            //result.SetCaptureProperty(CapProp.Fps, 10);
+            //result.SetCaptureProperty(CapProp.Format, 1);
+
+            result.SetCaptureProperty(CapProp.AutoExposure, brightness.Value);
+
+            result.SetCaptureProperty(CapProp.Hue, 10);
+
+            var props = GetProps(result);
+
+            result.Start();
+
+            return result;
+        }
+
+        private static Dictionary<string, double> GetProps(Capture result)
+        {
+            var capProps = Enum.GetValues(typeof(CapProp)).Cast<CapProp>().Distinct();
+
+            return capProps.ToDictionary(capProp => capProp.ToString(), result.GetCaptureProperty);
+        }
+
 
         public static BitmapSource ToBitmapSource(Bitmap source)
         {
             var hBitmap = source.GetHbitmap();
+
+
 
             try
             {

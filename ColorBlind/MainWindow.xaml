@@ -8,6 +8,11 @@
         Title="MainWindow" Height="350" Width="525">
     <DockPanel>
         <Button DockPanel.Dock="Top" Click="Button_Click">Snap!</Button>
+      
+        <Slider Minimum="0" Maximum="1000" Value="20" x:Name="brightness" DockPanel.Dock="Top"></Slider>
+        <Slider Minimum="0" Maximum="1000" Value="20" x:Name="contrast"  DockPanel.Dock="Top"></Slider>
+        <Slider Minimum="0" Maximum="1000" Value="20" x:Name="gain" DockPanel.Dock="Top"></Slider>
+        <Slider Minimum="0" Maximum="1000" Value="20" x:Name="sat"  DockPanel.Dock="Top"></Slider>
         <Image x:Name="Image"></Image>
     </DockPanel>
 </Window>
