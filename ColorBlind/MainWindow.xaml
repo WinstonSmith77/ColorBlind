@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ColorBlind"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+    <DockPanel>
+        <Button DockPanel.Dock="Top" Click="Button_Click">Snap!</Button>
+        <Image x:Name="Image"></Image>
+    </DockPanel>
 </Window>
